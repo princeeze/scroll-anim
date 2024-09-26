@@ -33,21 +33,21 @@ export default function ScrollPage() {
         <Slider
           src={img1.src}
           text="Front End Developer"
-          left="-12%"
+          left="-70%"
           progress={scrollYProgress}
           direction="left"
         />
         <Slider
           src={img2.src}
           text="Product Designer"
-          left="-15%"
+          left="-40%"
           progress={scrollYProgress}
           direction="right"
         />
         <Slider
           src={img3.src}
           text="Web Developer"
-          left="-20%"
+          left="-50%"
           progress={scrollYProgress}
           direction="left"
         />
