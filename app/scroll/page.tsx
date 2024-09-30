@@ -4,22 +4,10 @@ import Image from "next/image";
 import img1 from "@/public/landscape/1.jpg";
 import img2 from "@/public/landscape/2.jpeg";
 import img3 from "@/public/landscape/3.jpg";
-import { useEffect, useRef } from "react";
-import Lenis from "lenis";
+import { useRef } from "react";
 import { motion, MotionValue, useScroll, useTransform } from "framer-motion";
 
 export default function ScrollPage() {
-  useEffect(() => {
-    const lenis = new Lenis();
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-  }, []);
-
   const container = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: container,
