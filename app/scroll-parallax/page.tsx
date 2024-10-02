@@ -15,19 +15,22 @@ export default function Index() {
     offset: ["start end", "end start"],
   });
 
-  const sm = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const sm = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const md = useTransform(scrollYProgress, [0, 1], [0, -150]);
   const lg = useTransform(scrollYProgress, [0, 1], [0, -250]);
 
   const images = [
     {
+      src: image3,
+      y: lg,
+    },
+    {
       src: image1,
+      y: md,
     },
     {
       src: image2,
-    },
-    {
-      src: image3,
+      y: lg,
     },
   ];
 
@@ -45,7 +48,7 @@ export default function Index() {
   return (
     <div className="cont">
       <div className="h-[100vh]"></div>
-      <div className="m-[10vh]" ref={containerRef}>
+      <div className="mx-[10vh]" ref={containerRef}>
         <motion.h1
           style={{ y: sm }}
           className="text-[6vw] font-black uppercase"
@@ -66,18 +69,17 @@ export default function Index() {
           </p>
         </div>
       </div>
-      <div className="relative mt-[10vh] flex w-full justify-center">
-        {images.map(({ src }, i) => {
+      <div className="relative mt-[30vh] flex w-full justify-center">
+        {images.map(({ src, y }, i) => {
           return (
             <motion.div
               key={`i_${i}`}
               className={`relative ${
-                i === 0 ? "left-[20vw] top-[10vh] z-10 h-[60vh] w-[50vh]" : ""
-              } ${
-                i === 1 ? "left-[10vw] top-[15vh] z-20 h-[40vh] w-[30vh]" : ""
-              } ${
-                i === 2 ? "left-[-56vw] top-[5vh] z-30 h-[25vh] w-[20vh]" : ""
+                i === 0 ? "top-[5vh] z-30 h-[25vh] w-[20vh]" : ""
+              } ${i === 1 ? "-left-[5vw] z-10 h-[60vh] w-[50vh]" : ""} ${
+                i === 2 ? "-left-[10vw] top-[15vh] z-20 h-[40vh] w-[30vh]" : ""
               }`}
+              style={{ y }}
             >
               <Image
                 src={src}
