@@ -7,6 +7,7 @@ export default function Projects() {
       <Link href="/canvas">Canvas</Link>
       <Link href="/scroll">Scroll</Link>
       <Link href="/zoom">Zoom</Link>
+      <Link href="/scroll-parallax">Scroll Parallax</Link>
     </div>
   );
 }
