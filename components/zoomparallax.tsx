@@ -28,6 +28,7 @@ export default function ZoomParallax() {
     src: StaticImageData;
     scale: MotionValue<number>;
     style: CSSProperties;
+    lcp?: boolean;
   };
 
   const images: ImageData[] = [
@@ -35,6 +36,7 @@ export default function ZoomParallax() {
       src: image1,
       scale: scale1,
       style: { width: "25vw", height: "27vh" },
+      lcp: true,
     },
     {
       src: image2,
@@ -73,12 +75,12 @@ export default function ZoomParallax() {
       <div className="h-[100vh]"></div>
 
       <motion.div ref={container} className="relative h-[300vh]">
-        <div className="sticky top-0 h-[100vh] overflow-hidden flex justify-center items-center">
-          {images.map(({ src, scale, style }, index) => (
+        <div className="sticky top-0 flex h-[100vh] items-center justify-center overflow-hidden">
+          {images.map(({ src, scale, style, lcp }, index) => (
             <motion.div
               key={index}
               style={{ scale }}
-              className="w-full absolute flex justify-center items-center h-full overflow-hidden top-0 "
+              className="absolute top-0 flex h-full w-full items-center justify-center overflow-hidden"
             >
               <div
                 className="absolute"
@@ -92,6 +94,7 @@ export default function ZoomParallax() {
                   fill={true}
                   className="object-cover"
                   placeholder="blur"
+                  priority={lcp}
                 />
               </div>
             </motion.div>
