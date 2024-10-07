@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import SmoothScroll from "@/components/smoothscroll";
+import Providers from "./providers";
 
 const ppacmaBook = localFont({
   src: "./fonts/PPAcma-Book.ttf",
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${ppacmaBook.className} antialiased`}>
-        {children}
+        <Providers>{children}</Providers>
         <SmoothScroll />
       </body>
     </html>
