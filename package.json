@@ -11,7 +11,7 @@
   "dependencies": {
     "framer-motion": "^11.8.0",
     "lenis": "^1.1.13",
-    "next": "14.2.13",
+    "next": "14.2.15",
     "next-transition-router": "^0.2.1",
     "react": "^18",
     "react-dom": "^18"
