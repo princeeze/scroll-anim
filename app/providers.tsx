@@ -4,57 +4,77 @@ import { motion, useAnimate } from "framer-motion";
 import { TransitionRouter } from "next-transition-router";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
-  const [sliderRef, animateSlider] = useAnimate();
-  const [perspectiveRef, animatePerspective] = useAnimate();
+  const [columnContainerRef, animateColumnContainer] = useAnimate();
   const [opacityRef, animateOpacity] = useAnimate();
+  const colNo = 7;
 
   return (
     <TransitionRouter
       auto={true}
       enter={(next) => {
-        const animations = [
-          animateSlider(sliderRef.current, { top: "100dvh" }, { duration: 0 }),
-          animateOpacity(
-            opacityRef.current,
-            { opacity: [0, 1] },
-            { duration: 0.5 },
+        const columnAnimation = [...Array(colNo)].map((_, i) =>
+          animateColumnContainer(
+            `div:nth-child(${i + 1})`,
+            { top: ["0", "100dvh"] },
+            {
+              duration: 0.5,
+              ease: [0.76, 0, 0.24, 1],
+              delay: (colNo - 1 - i) * 0.05,
+            },
           ),
-          animatePerspective(
-            perspectiveRef.current,
-            { scale: [1], y: [0], opacity: [1] },
-            { duration: 0 },
-          ),
-        ];
+        );
 
-        Promise.all(animations).then(next);
+        const opacityAnimation = animateOpacity(
+          opacityRef.current,
+          {
+            opacity: [0.5, 0],
+          },
+          { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+        );
+
+        Promise.all([...columnAnimation, opacityAnimation]).then(next);
       }}
       leave={(next) => {
-        const animations = [
-          animateSlider(
-            sliderRef.current,
-            { top: ["100dvh", "0dvh"] },
-            { duration: 1, ease: [0.76, 0, 0.24, 1] },
+        const columnAnimation = [...Array(colNo)].map((_, i) =>
+          animateColumnContainer(
+            `div:nth-child(${i + 1})`,
+            { top: ["-100dvh", "0"] },
+            {
+              duration: 0.5,
+              ease: [0.76, 0, 0.24, 1],
+              delay: (colNo - 1 - i) * 0.05,
+            },
           ),
-          animatePerspective(
-            perspectiveRef.current,
-            { scale: [1, 0.8], y: [0, "-30dvh"], opacity: [1, 0.4] },
-            { duration: 1.2, ease: [0.76, 0, 0.24, 1] },
-          ),
-        ];
+        );
 
-        Promise.all(animations).then(next);
+        const opacityAnimation = animateOpacity(
+          opacityRef.current,
+          {
+            opacity: [0, 0.5],
+          },
+          { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+        );
+
+        Promise.all([...columnAnimation, opacityAnimation]).then(next);
       }}
     >
-      <div className="bg-foreground">
-        <motion.div
-          ref={sliderRef}
-          className="fixed top-0 z-10 h-[100dvh] w-full bg-background"
-          initial={{ top: "100dvh" }}
-        />
-        <div ref={perspectiveRef} className="bg-background">
-          <div ref={opacityRef}>{children}</div>
-        </div>
+      <div
+        ref={columnContainerRef}
+        className="pointer-events-none fixed top-0 z-50 flex h-screen w-screen"
+      >
+        {[...Array(colNo)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="pointer-events-none relative top-[-100dvh] h-full w-full bg-foreground"
+          ></motion.div>
+        ))}
       </div>
+      <motion.div
+        ref={opacityRef}
+        className="pointer-events-none fixed top-0 z-50 flex h-screen w-screen bg-foreground"
+        initial={{ opacity: 0 }}
+      ></motion.div>
+      {children}
     </TransitionRouter>
   );
 }
