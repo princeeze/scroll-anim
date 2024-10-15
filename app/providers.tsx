@@ -15,7 +15,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         const columnAnimation = [...Array(colNo)].map((_, i) =>
           animateColumnContainer(
             `div:nth-child(${i + 1})`,
-            { top: ["0", "100dvh"] },
+            { top: ["0dvh", "100dvh"] },
             {
               duration: 0.5,
               ease: [0.76, 0, 0.24, 1],
@@ -38,7 +38,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         const columnAnimation = [...Array(colNo)].map((_, i) =>
           animateColumnContainer(
             `div:nth-child(${i + 1})`,
-            { top: ["-100dvh", "0"] },
+            { top: ["-100dvh", "0dvh"] },
             {
               duration: 0.5,
               ease: [0.76, 0, 0.24, 1],
@@ -60,7 +60,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     >
       <div
         ref={columnContainerRef}
-        className="pointer-events-none fixed top-0 z-50 flex h-screen w-screen"
+        className="pointer-events-none fixed top-[0dvh] z-50 flex h-[100dvh] w-screen"
       >
         {[...Array(colNo)].map((_, i) => (
           <motion.div
@@ -71,7 +71,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       </div>
       <motion.div
         ref={opacityRef}
-        className="pointer-events-none fixed top-0 z-50 flex h-screen w-screen bg-foreground"
+        className="pointer-events-none fixed top-[0dvh] z-50 flex h-[100dvh] w-screen bg-foreground"
         initial={{ opacity: 0 }}
       ></motion.div>
       {children}
